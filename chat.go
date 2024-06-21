@@ -218,6 +218,24 @@ type ChatCompletionRequest struct {
 	ToolChoice any `json:"tool_choice,omitempty"`
 	// Options for streaming response. Only set this when you set stream: true.
 	StreamOptions *StreamOptions `json:"stream_options,omitempty"`
+
+	// openrouter provider
+	Provider *OpenRouterProvider `json:"provider,omitempty"`
+}
+
+type OpenRouterProvider struct {
+	// Whether to allow backup providers to serve requests
+	// - true: (default) when the primary provider is unavailable, use the next best provider.
+	// - false: use only the primary provider, and return the upstream error if it's unavailable.
+	AllowFallbacks bool `json:"allow_fallbacks,omitempty"`
+	// An ordered list of provider names. The router will attempt to use the first provider in the subset of this list that supports your requested model, and fall back to the next if it is unavailable. If no providers are available, the request will fail with an error message.
+	Order []string `json:"order,omitempty"`
+	// Data collection setting. If no available model provider meets the requirement, your request will return an error.
+	// - allow: (default) allow providers which store user data non-transiently and may train on it
+	// - deny: use only providers which do not collect user data.
+	DataCollection string `json:"data_collection,omitempty"`
+	// Whether to filter providers to only those that support the parameters you've provided. If this setting is omitted or set to false, then providers will receive only the parameters they support, and ignore the rest.
+	RequireParameters bool `json:"require_parameters,omitempty"`
 }
 
 type StreamOptions struct {
@@ -232,6 +250,34 @@ type ToolType string
 
 const (
 	ToolTypeFunction ToolType = "function"
+)
+
+const (
+	OpenrouterProviderOpenAI      = "OpenAI"
+	OpenrouterProviderAnthropic   = "Anthropic"
+	OpenrouterProviderHuggingFace = "HuggingFace"
+	OpenrouterProviderGoogle      = "Google"
+	OpenrouterProviderTogether    = "Together"
+	OpenrouterProviderDeepInfra   = "DeepInfra"
+	OpenrouterProviderAzure       = "Azure"
+	OpenrouterProviderModal       = "Modal"
+	OpenrouterProviderAnyScale    = "AnyScale"
+	OpenrouterProviderReplicate   = "Replicate"
+	OpenrouterProviderPerplexity  = "Perplexity"
+	OpenrouterProviderRecursal    = "Recursal"
+	OpenrouterProviderFireworks   = "Fireworks"
+	OpenrouterProviderMistral     = "Mistral"
+	OpenrouterProviderGroq        = "Groq"
+	OpenrouterProviderCohere      = "Cohere"
+	OpenrouterProviderLepton      = "Lepton"
+	OpenrouterProviderOctoAI      = "OctoAI"
+	OpenrouterProviderNovita      = "Novita"
+	OpenrouterProviderDeepSeek    = "DeepSeek"
+	OpenrouterProviderInfermatic  = "Infermatic"
+	OpenrouterProviderMancer      = "Mancer"
+	OpenrouterProviderMancer2     = "Mancer 2"
+	OpenrouterProviderLynn2       = "Lynn 2"
+	OpenrouterProviderLyn         = "Lynn"
 )
 
 type Tool struct {

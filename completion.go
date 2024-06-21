@@ -151,6 +151,9 @@ type CompletionRequest struct {
 	// refs: https://platform.openai.com/docs/api-reference/completions/create#completions/create-logit_bias
 	LogitBias map[string]int `json:"logit_bias,omitempty"`
 	User      string         `json:"user,omitempty"`
+
+	// openrouter provider
+	Provider *OpenRouterProvider `json:"provider,omitempty"`
 }
 
 // CompletionChoice represents one of possible completions.

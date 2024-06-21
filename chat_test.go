@@ -93,6 +93,16 @@ func TestChatCompletions(t *testing.T) {
 				Content: "Hello!",
 			},
 		},
+		Provider: &openai.OpenRouterProvider{
+			Order: []string{
+				openai.OpenrouterProviderDeepInfra,
+				openai.OpenrouterProviderNovita,
+				openai.OpenrouterProviderLepton,
+				openai.OpenrouterProviderOctoAI,
+				openai.OpenrouterProviderTogether,
+			},
+			AllowFallbacks: false,
+		},
 	})
 	checks.NoError(t, err, "CreateChatCompletion error")
 }
